@@ -1,0 +1,29 @@
+
+-- NBA Analytics Dashboard
+-- SQL Queries
+
+-- Top 10 Scorers
+SELECT PLAYER, TEAM, GP, PTS, AST, REB
+FROM player_stats
+ORDER BY PTS DESC
+LIMIT 10;
+
+-- Most Efficient Players (Min 20 Games)
+SELECT 
+    PLAYER, TEAM, GP, PTS, AST, REB,
+    (PTS + AST + REB) AS EFFICIENCY
+FROM player_stats
+WHERE GP >= 20
+ORDER BY EFFICIENCY DESC
+LIMIT 10;
+
+-- Team Scoring Averages
+SELECT
+    TEAM,
+    COUNT(PLAYER) AS NUM_PLAYERS,
+    ROUND(AVG(PTS), 1) AS AVG_PTS,
+    ROUND(AVG(AST), 1) AS AVG_AST,
+    ROUND(AVG(REB), 1) AS AVG_REB
+FROM player_stats
+GROUP BY TEAM
+ORDER BY AVG_PTS DESC;
